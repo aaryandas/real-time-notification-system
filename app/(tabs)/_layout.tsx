@@ -1,24 +1,27 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { TabBarIcon, TabIcon } from '@/components/navigation/TabBarIcon';
+import { useColorScheme } from 'react-native';  // Use the native hook to detect the color scheme
+import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();  // Get the current color scheme (light or dark)
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,  // Adjust the tint color based on the color scheme
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: colorScheme === 'dark' ? '#000' : '#FFF',  // Example: Dark or light background for the tab bar
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Shop',
+          title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon name='shopping-bag' color={color} />
+            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
           ),
         }}
       />
